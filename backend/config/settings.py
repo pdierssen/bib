@@ -42,16 +42,20 @@ INSTALLED_APPS = [
     'rest_framework',
     'authentication',
     'lending',
+    'rest_framework.authtoken',
 ]
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'authentication.NFCAuthenticationBackend'
-#     ),
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'authentication.NFCAuthenticationBackend',
-#     ]
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+}
+AUTHENTICATION_BACKENDS = [
+    "authentication.auth_backends.NFCAuthenticationBackend",
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

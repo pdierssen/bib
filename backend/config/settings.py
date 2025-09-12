@@ -39,8 +39,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
     'authentication',
+    'lending',
 ]
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'authentication.NFCAuthenticationBackend'
+#     ),
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'authentication.NFCAuthenticationBackend',
+#     ]
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

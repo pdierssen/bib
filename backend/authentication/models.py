@@ -23,6 +23,8 @@ class UserManager(BaseUserManager):
         return self.create_user(nfc_id, password, **extra_fields)
 
 class User(AbstractUser):
+    username = None # see initial migration
+    email = None
     nfc_id = models.CharField(max_length=20, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)

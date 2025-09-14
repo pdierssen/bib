@@ -22,7 +22,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ['id', 'nfc_id']
+class UserSerializer(serializers.ModelSerializer):
+     class Meta:
+         model = User
+         fields = ['first_name', 'last_name']

@@ -10,7 +10,7 @@ User = get_user_model()
 
 class RegisterView(generics.GenericAPIView):
     queryset = User.objects.all()
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.AllowAny,) # einheitlich in []
     serializer_class = UserRegistrationSerializer
 
     def post(self, request):

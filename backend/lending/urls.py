@@ -4,8 +4,8 @@ from . import views
 
 
 router = DefaultRouter()
-#router.register('healt-check/', views.HealthCheckView, basename='healt-check')
-
+router.register(r'books', views.BookViewSet, basename='books')
+router.register(r'lendings', views.LendingViewSet, basename='lendings')
 urlpatterns = [
     path('', include(router.urls)),
     path('health/', views.HealthCheckView.as_view(), name='health-check'),

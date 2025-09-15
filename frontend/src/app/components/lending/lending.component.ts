@@ -54,8 +54,14 @@ export class LendingComponent implements OnInit{
         if (event.key ==='Enter') {
           const book_nfc_id = this.borrowBook_nfc_id();
           if (book_nfc_id) {
-            // borrow book todo
-            console.log(book_nfc_id);
+            this.lendingService.borrowBook(book_nfc_id).subscribe({
+              next:  () => {
+                console.log("Book borrowed");
+              }, error: err => {
+                console.error('Borrowing failed', err);
+                alert('Borrowing failed');
+              }
+            });
           }
           this.borrowBook_nfc_id.set('');
         } else {
@@ -75,8 +81,14 @@ export class LendingComponent implements OnInit{
         if (event.key ==='Enter') {
           const book_nfc_id = this.returnBook_nfc_id();
           if (book_nfc_id) {
-            // borrow book todo
-            console.log(book_nfc_id);
+            this.lendingService.returnBook(book_nfc_id).subscribe({
+              next: () => {
+                console.log("Book returned.");
+              }, error: err => {
+                console.error('Return failed', err);
+                alert('Return failed');
+              }
+            });
           }
           this.returnBook_nfc_id.set('');
         } else {

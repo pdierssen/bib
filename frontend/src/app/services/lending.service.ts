@@ -17,11 +17,11 @@ export class LendingService {
     return this.http.get<ILendingEntry[]>(`${environment.apiEndpoint}lendings/`);
   }
 
-  borrowBook(nfc_id: string): Observable<any> {
-    return this.http.post(`${environment.apiEndpoint}lendings/${nfc_id}/`, {});
+  borrowBook(book_nfc_id: string): Observable<any> {
+    return this.http.post(`${environment.apiEndpoint}lendings/${book_nfc_id}/`, {});
   }
 
-  returnBook(nfc_id: string): Observable<any> {
-    return this.http.patch(`${environment.apiEndpoint}lendings/${nfc_id}/`, {});
+  returnBook(book_nfc_id: string): Observable<any> {
+    return this.http.delete(`${environment.apiEndpoint}lendings/${book_nfc_id}/`, {});
   }
 }

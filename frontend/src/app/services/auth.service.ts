@@ -10,17 +10,14 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class AuthService {
   endpoint = environment.apiEndpoint;
-
-  private token = 'token';
-  private username = 'name'
   private readonly isBrowser: boolean;
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem(this.token);
+    return !!localStorage.getItem(environment.tokenKey);
   }
 
   getUsername(): string | null {
-    return localStorage.getItem(this.username);
+    return localStorage.getItem(environment.usernameKey);
   }
 
   login(nfc_id: string) {
@@ -28,16 +25,16 @@ export class AuthService {
     return this.http.post<any>(`${this.endpoint}login/`, {nfc_id})
       .pipe(
         tap(response => {
-            localStorage.setItem(this.token, response.token);
-            localStorage.setItem(this.username, response.username || '');
+            localStorage.setItem(environment.tokenKey, response.token);
+            localStorage.setItem(environment.usernameKey, response.name || '');
           }
         )
       )
   }
 
   logout() {
-    localStorage.removeItem(this.token);
-    localStorage.removeItem(this.username);
+    localStorage.removeItem(environment.tokenKey);
+    localStorage.removeItem(environment.usernameKey);
   }
 
   constructor(

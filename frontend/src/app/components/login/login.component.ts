@@ -1,10 +1,13 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
+import {HeaderComponent} from "../header/header.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [
+    HeaderComponent
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

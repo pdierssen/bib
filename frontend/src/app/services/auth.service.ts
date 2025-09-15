@@ -4,6 +4,7 @@ import {tap} from 'rxjs';
 import {environment} from '../../environment/environment';
 import {Router} from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import {IRegistration} from "../interfaces/auth.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,10 @@ export class AuthService {
           }
         )
       )
+  }
+
+  register(data: IRegistration) {
+    return this.http.post<any>(`${this.endpoint}register/`, data);
   }
 
   logout() {

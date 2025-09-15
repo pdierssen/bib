@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {CommonModule, NgIf} from '@angular/common';
-import {HttpClient} from '@angular/common/http';
+import {Router} from "@angular/router";
 
 
 
@@ -16,7 +16,10 @@ import {HttpClient} from '@angular/common/http';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  constructor(private authService: AuthService) {
+  constructor(
+      private authService: AuthService,
+      private router: Router
+  ) {
   }
 
   get isLoggedIn(): boolean {
@@ -27,9 +30,9 @@ export class HeaderComponent {
     return this.authService.getUsername();
   }
 
-  login() {
+  register() {
     // example: redirect to login page
-    this.authService.login("id");
+    this.router.navigate(['/register']);
   }
 
   logout() {

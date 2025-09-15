@@ -1,6 +1,6 @@
 <header class="app-header">
-  <div class="app-title">📚 My Kiosk App</div>
-  Hello
+  <div class="app-title">OHBook</div>
+
   <nav class="user-controls">
     <ng-container *ngIf="isLoggedIn; else loggedOut">
       <span class="username">Hello, {{ username }}</span>
@@ -8,7 +8,7 @@
     </ng-container>
 
     <ng-template #loggedOut>
-      <button (click)="login()">Login</button>
+      <button (click)="register()">Register</button>
     </ng-template>
   </nav>
 </header>

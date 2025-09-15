@@ -31,6 +31,19 @@ services:
     networks:
       - network
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: bib_frontend
+    ports:
+      - "${FRONTEND_PORT}:80"
+    depends_on:
+      - bib_backend
+    networks:
+      - network
+
+
   database:
     image: postgres:latest
     container_name: bib_database

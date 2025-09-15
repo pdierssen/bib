@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-!!7n5qk0uwlnto3ce8-mb+)ou_fnfyhtb2j_y_sg4m=g*h@66j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['bib_backend']
 
 
 # Application definition

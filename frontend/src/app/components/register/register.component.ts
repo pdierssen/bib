@@ -8,6 +8,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButton} from '@angular/material/button';
 import {MatInput} from '@angular/material/input';
+import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,8 @@ import {MatInput} from '@angular/material/input';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatButton,
-    MatInput
+    MatInput,
+    NgOptimizedImage
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'

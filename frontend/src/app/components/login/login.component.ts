@@ -1,12 +1,14 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {HeaderComponent} from "../header/header.component";
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
-    HeaderComponent
+    HeaderComponent,
+    NgOptimizedImage
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'

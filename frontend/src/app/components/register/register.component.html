@@ -29,7 +29,8 @@
     <ng-template matStepLabel>Scan your NFC card</ng-template>
 
     <div id="nfc_input" class="nfc-step-container" (keydown)="onKeydown($event)" tabindex="0">
-      <img src="assets/nfc-scan.png" alt="Hold NFC card to reader">
+      <img ngSrc="assets/scan_nfc.png" width="260" height="280" alt="Hold NFC card to reader">
+
       <p>Hold your NFC card to the reader</p>
     </div>
 

@@ -37,4 +37,4 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def __str__(self):
-        return self.nfc_id + " " + self.first_name + " " + self.last_name
+        return self.first_name + " " + self.last_name

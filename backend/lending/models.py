@@ -34,5 +34,6 @@ class Lending(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
 
+
     def __str__(self):
         return self.user.__str__() + " " + self.book.__str__()

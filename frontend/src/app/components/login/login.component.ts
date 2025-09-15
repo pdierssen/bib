@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {HeaderComponent} from "../header/header.component";
 import {NgOptimizedImage} from "@angular/common";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
-    private elRef: ElementRef
+    private elRef: ElementRef,
+    private router: Router
   ) {
   }
 
@@ -44,7 +46,7 @@ export class LoginComponent {
     this.authService.login(nfcId).subscribe({
       next: () => {
         console.log('Login successful!');
-        // redirect or load main kiosk page
+        this.router.navigate(['/lending']);
       },
       error: err => {
         console.error('Login failed', err);

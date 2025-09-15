@@ -3,3 +3,8 @@ export interface IRegistration{
   first_name: string,
   last_name: string
 }
+
+export interface IUser {
+  first_name: string,
+  last_name: string
+}

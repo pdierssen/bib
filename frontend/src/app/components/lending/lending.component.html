@@ -1,0 +1,23 @@
+<app-header></app-header>
+
+<div class="overview-container">
+  <h2>Overview</h2>
+  <button mat-button="elevated" (click)="openBorrowDialog()">Borrow Book</button>
+  <button mat-button="elevated" (click)="openReturnDialog()">Return Book</button>
+  <h2>Books that you borrowed</h2>
+  <mat-list>
+    <mat-list-item *ngFor="let lendingentry of lendingentries()">
+      <div class="lendingrow">
+        <div mat-line>{{ lendingentry.book.title }}</div>
+        <div mat-line class="authors">
+          by
+          <div *ngFor="let author of lendingentry.book.authors">
+            <span>| {{author.first_name}}, {{author.last_name}} |</span>
+          </div>
+        </div>
+      </div>
+
+    </mat-list-item>
+  </mat-list>
+</div>
+

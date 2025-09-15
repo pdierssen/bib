@@ -1,3 +1,4 @@
+from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets
@@ -40,7 +41,17 @@ class LendingViewSet(viewsets.ModelViewSet):
         serializer = LendingSerializer(lendings, many=True)
         return Response(serializer.data)
 
+    @action(detail=False, methods=["delete"])
+    def return_by_nfc(self, request):
+        nfc_id = request.data.get("nfc_id")
+        if not nfc_id:
+            return Response({"error": "nfc_id required"}, status=status.HTTP_400_BAD_REQUEST)
 
-
+        try:
+            lending = Lending.objects.get(book__nfc_id=nfc_id)
+            lending.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Lending.DoesNotExist:
+            return Response({"error": "No lending found"}, status=status.HTTP_404_NOT_FOUND)
 
 

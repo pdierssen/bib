@@ -34,8 +34,7 @@ class BookSerializer(serializers.ModelSerializer):
         author_instances = []
         for author_data in authors_data:
             author, _ = Author.objects.get_or_create(
-                first_name=author_data.get('first_name'),
-                last_name=author_data.get('last_name'),
+                name=author_data.get('name'),
             )
             author_instances.append(author)
 

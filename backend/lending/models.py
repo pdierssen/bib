@@ -5,10 +5,10 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class Author(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+
     def __str__(self):
-        return self.first_name + " " + self.last_name
+        return self.name
 
 class Publisher(models.Model):
     name = models.CharField(max_length=100)
@@ -18,9 +18,9 @@ class Publisher(models.Model):
 
 class Book(models.Model):
     nfc_id = models.CharField(max_length=100, primary_key=True)
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=200)
     authors = models.ManyToManyField(Author)
-    isbn = models.CharField(max_length=100)
+    isbn = models.CharField(max_length=30)
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
     edition = models.CharField(max_length=100)
 

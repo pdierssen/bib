@@ -22,6 +22,6 @@ export class LendingService {
   }
 
   returnBook(book_nfc_id: string): Observable<any> {
-    return this.http.delete(`${environment.apiEndpoint}lendings/${book_nfc_id}/`, {});
+    return this.http.post(`${environment.apiEndpoint}lendings/${book_nfc_id}/return/`, {});
   }
 }

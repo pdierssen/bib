@@ -2,7 +2,7 @@ from .models import User
 from django.contrib.auth.backends import BaseBackend
 
 class NFCAuthenticationBackend(BaseBackend):
-    def authenticate(self, request, nfc_id=None, **kwargs):
+    def authenticate(self, request, nfc_id=None, password= None, **kwargs):
         if nfc_id:
             try:
                 user = User.objects.get(nfc_id=nfc_id)

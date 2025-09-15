@@ -1,0 +1,14 @@
+<header class="app-header">
+  <div class="app-title">📚 My Kiosk App</div>
+  Hello
+  <nav class="user-controls">
+    <ng-container *ngIf="isLoggedIn; else loggedOut">
+      <span class="username">Hello, {{ username }}</span>
+      <button (click)="logout()">Logout</button>
+    </ng-container>
+
+    <ng-template #loggedOut>
+      <button (click)="login()">Login</button>
+    </ng-template>
+  </nav>
+</header>

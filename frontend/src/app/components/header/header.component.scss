@@ -1,0 +1,32 @@
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1976d2;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.app-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.user-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.username {
+  font-weight: 500;
+}
+
+button {
+  background: white;
+  color: #1976d2;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+}

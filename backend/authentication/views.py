@@ -31,6 +31,10 @@ class LoginView(generics.GenericAPIView):
         if user is None:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         token, created = Token.objects.get_or_create(user=user)
+        if not created:
+            Token.objects.get(user=user).delete()
+            token, created = Token.objects.get_or_create(user=user)
+
         return Response({"token": token.key, "name": user.__str__()})
 
 class AuthTestView(generics.GenericAPIView):

@@ -35,4 +35,12 @@ class LendingViewSet(viewsets.ModelViewSet):
             return LendingCreateSerializer
         return LendingSerializer
 
+    def list(self, request, *args, **kwargs):
+        lendings = Lending.objects.all()
+        serializer = LendingSerializer(lendings, many=True)
+        return Response(serializer.data)
+
+
+
+
 

@@ -62,10 +62,27 @@ export class RegisterComponent implements OnInit{
         this.register(nfcId);
       }
       this.nfcBuffer = '';
-    } else {
+    } else if (event.key == 'Shift'){
+      // do nothing
+    }
+    else {
       this.nfcBuffer += event.key;
     }
     event.preventDefault();
+  }
+  reportError(err: any) {
+    let message = 'Failed';
+      if (err.error) {
+        if (err.error.non_field_errors && err.error.non_field_errors.length > 0) {
+          message = err.error.non_field_errors[0]; // Take the first error message
+        } else if (err.error.detail) {
+          message = err.error.detail;
+        } else if (typeof err.error === 'string') {
+          message = err.error;
+        }
+      }
+      console.error('Failed', err);
+      alert(message);
   }
 
   register(nfc_id: string) {
@@ -81,8 +98,7 @@ export class RegisterComponent implements OnInit{
         this.router.navigate(['/login']); // redirect after success
       },
       error: (err) => {
-        console.error('Registration failed', err);
-        alert('Registration failed. Try again.');
+        this.reportError(err);
       }
     });
   }

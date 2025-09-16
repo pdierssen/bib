@@ -35,11 +35,29 @@ export class LoginComponent {
         this.login(nfcId);
       }
       this.inputBuffer = '';
-    } else {
+    } else if (event.key == 'Shift') {
+      // do nothing
+    }
+    else {
       // accumulate characters from keyboard/NFC
       this.inputBuffer += event.key;
     }
     event.preventDefault();
+  }
+
+  reportError(err: any) {
+    let message = 'Failed';
+      if (err.error) {
+        if (err.error.non_field_errors && err.error.non_field_errors.length > 0) {
+          message = err.error.non_field_errors[0]; // Take the first error message
+        } else if (err.error.detail) {
+          message = err.error.detail;
+        } else if (typeof err.error === 'string') {
+          message = err.error;
+        }
+      }
+      console.error('Failed', err);
+      alert(message);
   }
 
   login(nfcId: string) {
@@ -49,8 +67,7 @@ export class LoginComponent {
         this.router.navigate(['/lending']);
       },
       error: err => {
-        console.error('Login failed', err);
-        alert('Login failed. Try again.');
+        this.reportError(err);
       }
     });
   }

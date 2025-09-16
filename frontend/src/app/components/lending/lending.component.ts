@@ -1,6 +1,6 @@
 import {Component, computed, inject, OnInit, signal, WritableSignal} from '@angular/core';
 import {HeaderComponent} from '../header/header.component';
-import {ILendingEntry} from '../../interfaces/lending.interface';
+import {IBookBorrowReturn, ILendingEntry} from '../../interfaces/lending.interface';
 import {LendingService} from '../../services/lending.service';
 import {MatListModule} from '@angular/material/list';
 import {MatLineModule} from '@angular/material/core';
@@ -36,6 +36,10 @@ export class LendingComponent implements OnInit{
   readonly returnBook_nfc_id = signal('');
 
   ngOnInit() {
+    this.fetchBorrowedBooks();
+  }
+
+  fetchBorrowedBooks() {
     this.lendingService.getBorrowedBooks().subscribe(
       data => {
         this._lendingentries.set(data);
@@ -48,6 +52,21 @@ export class LendingComponent implements OnInit{
   ) {
   }
 
+  reportError(err: any) {
+    let message = 'Failed';
+                if (err.error) {
+                  if (err.error.non_field_errors && err.error.non_field_errors.length > 0) {
+                    message = err.error.non_field_errors[0]; // Take the first error message
+                  } else if (err.error.detail) {
+                    message = err.error.detail;
+                  } else if (typeof err.error === 'string') {
+                    message = err.error;
+                  }
+                }
+                console.error('Failed', err);
+                alert(message);
+  }
+
   openBorrowDialog() {
     const dialogRef = this.dialog.open(
       BookdialogComponent
@@ -58,17 +77,23 @@ export class LendingComponent implements OnInit{
         if (event.key ==='Enter') {
           const book_nfc_id = this.borrowBook_nfc_id();
           if (book_nfc_id) {
-            this.lendingService.borrowBook(book_nfc_id).subscribe({
+            const book: IBookBorrowReturn = {
+              "book": book_nfc_id
+            }
+            this.lendingService.borrowBook(book).subscribe({
               next:  () => {
                 console.log("Book borrowed");
+                this.fetchBorrowedBooks();
               }, error: err => {
-                console.error('Borrowing failed', err);
-                alert('Borrowing failed');
+                this.reportError(err);
               }
             });
           }
           this.borrowBook_nfc_id.set('');
-        } else {
+        } else if (event.key == 'Shift'){
+          // do nothing
+        }
+        else {
           this.borrowBook_nfc_id.set(this.borrowBook_nfc_id() + event.key);
         }
       }
@@ -85,17 +110,23 @@ export class LendingComponent implements OnInit{
         if (event.key ==='Enter') {
           const book_nfc_id = this.returnBook_nfc_id();
           if (book_nfc_id) {
-            this.lendingService.returnBook(book_nfc_id).subscribe({
+            const book: IBookBorrowReturn = {
+              "book": book_nfc_id
+            }
+            this.lendingService.returnBook(book).subscribe({
               next: () => {
                 console.log("Book returned.");
+                this.fetchBorrowedBooks();
               }, error: err => {
-                console.error('Return failed', err);
-                alert('Return failed');
+                this.reportError(err);
               }
             });
           }
           this.returnBook_nfc_id.set('');
-        } else {
+        } else if (event.key == 'Shift') {
+          // do nothing
+        }
+        else {
           this.returnBook_nfc_id.set(this.returnBook_nfc_id() + event.key);
         }
       }

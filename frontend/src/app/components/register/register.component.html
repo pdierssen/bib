@@ -7,16 +7,18 @@
   <mat-step [stepControl]="nameFormGroup">
     <form [formGroup]="nameFormGroup">
       <ng-template matStepLabel>Enter your info</ng-template>
-
-      <mat-form-field appearance="fill">
-        <mat-label>First Name</mat-label>
-        <input matInput placeholder="Name" formControlName="first_name" required>
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Last Name</mat-label>
-        <input matInput placeholder="LastName" formControlName="last_name" required>
-      </mat-form-field>
+      <div class="field">
+        <mat-form-field appearance="fill">
+          <mat-label>First Name</mat-label>
+          <input matInput placeholder="Name" formControlName="first_name" required>
+        </mat-form-field>
+      </div>
+      <div class="field">
+        <mat-form-field appearance="fill">
+          <mat-label>Last Name</mat-label>
+          <input matInput placeholder="LastName" formControlName="last_name" required>
+        </mat-form-field>
+      </div>
 
       <div>
         <button mat-button matStepperNext>Next</button>

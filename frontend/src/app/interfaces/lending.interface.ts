@@ -25,3 +25,7 @@ export interface ILendingEntry {
   start_date: string;
   end_date: string;
 }
+
+export interface IBookBorrowReturn {
+  book: string;
+}

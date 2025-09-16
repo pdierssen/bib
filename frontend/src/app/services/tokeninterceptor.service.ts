@@ -4,7 +4,6 @@ import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
-  console.log('Interceptor triggered:', req.url);
 
   const authEndpoints = environment.authendpoints || [];
   const isAuthEndpoint = authEndpoints.some(endpoint => req.url.includes(endpoint));

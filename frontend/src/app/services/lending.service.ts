@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environment/environment";
-import {ILendingEntry} from "../interfaces/lending.interface";
+import {IBookBorrowReturn, ILendingEntry} from "../interfaces/lending.interface";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -17,11 +17,11 @@ export class LendingService {
     return this.http.get<ILendingEntry[]>(`${environment.apiEndpoint}lendings/`);
   }
 
-  borrowBook(book_nfc_id: string): Observable<any> {
-    return this.http.post(`${environment.apiEndpoint}lendings/${book_nfc_id}/`, {});
+  borrowBook(book_nfc_id: IBookBorrowReturn): Observable<any> {
+    return this.http.post(`${environment.apiEndpoint}lendings/`, book_nfc_id);
   }
 
-  returnBook(book_nfc_id: string): Observable<any> {
-    return this.http.post(`${environment.apiEndpoint}lendings/${book_nfc_id}/return/`, {});
+  returnBook(book_nfc_id: IBookBorrowReturn): Observable<any> {
+    return this.http.post(`${environment.apiEndpoint}lendings/return_by_nfc/`, book_nfc_id);
   }
 }

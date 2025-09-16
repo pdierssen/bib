@@ -19,7 +19,7 @@ class HealthCheckView(APIView):
 
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = BookSerializer
 
     def list(self, request, *args, **kwargs):
@@ -27,9 +27,23 @@ class BookViewSet(viewsets.ModelViewSet):
         serializer = BookSerializer(books, many=True)
         return Response(serializer.data)
 
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [permissions.IsAuthenticated]
+        else:
+            permission_classes = [permissions.IsAdminUser]
+        return [permission() for permission in permission_classes]
+
 class LendingViewSet(viewsets.ModelViewSet):
     queryset = Lending.objects.all()
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_permissions(self):
+        if self.action != 'destroy':
+            permission_classes = [permissions.IsAuthenticated]
+        else:
+            permission_classes = [permissions.IsAdminUser]
+        return [permission() for permission in permission_classes]
 
     def get_serializer_class(self):
         if self.action == 'create':
@@ -47,15 +61,18 @@ class LendingViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=["post"])
     def return_by_nfc(self, request):
+        user = self.request.user
         nfc_id = request.data.get("book")
         if not nfc_id:
             return Response({"error": "nfc_id required"}, status=status.HTTP_400_BAD_REQUEST)
 
-        try:
-            lending = Lending.objects.get(book__nfc_id=nfc_id)
-            lending.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        except Lending.DoesNotExist:
-            return Response({"error": "No lending found"}, status=status.HTTP_404_NOT_FOUND)
+        lending = Lending.objects.filter(
+            book=nfc_id,
+            user=user
+        )
+        if not lending:
+            return Response({"error": "You have not borrowed this book"}, status=status.HTTP_404_NOT_FOUND)
+        lending.delete()
 
+        return Response(status=status.HTTP_204_NO_CONTENT)
 

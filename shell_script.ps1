@@ -1,12 +1,14 @@
-#wsl user: to find it out type wsl in a shell
-$wslUser= "changeme"
-$pathToProject = "changeme"
+
+$name= $env:USERNAME
+$pathToProject = "PycharmProjects/bibliothek"
+
+Write-Output $name
 
 Write-Output "Starting WSL..."
 wsl -d Ubuntu --exec bash -c "echo WSL running"
 
 Write-Output "Starting Docker compose"
-wsl -d Ubuntu --exec bash -c "cd /mnt/c/Users/${wslUser}/${pathToProject} && docker-compose up -d" #--build for building from docker compose
+wsl -d Ubuntu --exec bash -c "cd /mnt/c/Users/${name}/${pathToProject} && docker-compose up -d" #--build for building from docker compose
 
 Start-Sleep -Seconds 5
 

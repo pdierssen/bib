@@ -29,7 +29,7 @@ class BookViewSet(viewsets.ModelViewSet):
 
 class LendingViewSet(viewsets.ModelViewSet):
     queryset = Lending.objects.all()
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_serializer_class(self):
         if self.action == 'create':
@@ -40,6 +40,8 @@ class LendingViewSet(viewsets.ModelViewSet):
         lendings = Lending.objects.all()
         serializer = LendingSerializer(lendings, many=True)
         return Response(serializer.data)
+
+
 
     @action(detail=False, methods=["delete"])
     def return_by_nfc(self, request):

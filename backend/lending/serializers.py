@@ -1,3 +1,5 @@
+import datetime
+
 from rest_framework import serializers
 
 from authentication.serializers import UserSerializer
@@ -43,6 +45,16 @@ class BookSerializer(serializers.ModelSerializer):
         return book
 
 
+def validate_lending_enty(self, data):
+    book_nfc_id = data.get('book')
+
+    lending_entry_with_same_book = Lending.objects.filter(
+        book=book_nfc_id
+    )
+    if lending_entry_with_same_book.exists():
+        raise serializers.ValidationError("This Book is already taken.")
+
+    return data
 
 
 class LendingSerializer(serializers.ModelSerializer):
@@ -59,4 +71,14 @@ class LendingCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lending
-        fields = ['user', 'book']
+        fields = ['book']
+
+    def create(self, validated_data):
+        validated_data['user'] = self.context['request'].user
+        validated_data['start_date'] = datetime.date.today()
+        deltatime = datetime.timedelta(days=30)
+        validated_data['end_date'] = datetime.date.today() + deltatime
+        return super().create(validated_data)
+
+    def validate(self, data):
+        return validate_lending_enty(self, data)

@@ -2,22 +2,20 @@
 
 <div class="overview-container">
   <h2>Overview</h2>
-  <button mat-button="elevated" (click)="openBorrowDialog()">Borrow Book</button>
-  <button mat-button="elevated" (click)="openReturnDialog()">Return Book</button>
+  <div class="borrow">
+    <button mat-button="elevated" (click)="openBorrowDialog()">Borrow Book</button>
+  </div>
+  <div class="return">
+    <button mat-button="elevated" (click)="openReturnDialog()">Return Book</button>
+  </div>
   <h2>Books that you borrowed</h2>
-  <mat-list>
-    <mat-list-item *ngFor="let lendingentry of lendingentries()">
+  <mat-accordion>
+    <ng-container *ngFor="let lendingentry of lendingentries()">
       <div class="lendingrow">
-        <div mat-line>{{ lendingentry.book.title }}</div>
-        <div mat-line class="authors">
-          by
-          <div *ngFor="let author of lendingentry.book.authors">
-            <span>| {{author.first_name}}, {{author.last_name}} |</span>
-          </div>
-        </div>
+        <app-lendinglistentry [entry]="lendingentry"></app-lendinglistentry>
       </div>
 
-    </mat-list-item>
-  </mat-list>
+    </ng-container>
+  </mat-accordion>
 </div>
 

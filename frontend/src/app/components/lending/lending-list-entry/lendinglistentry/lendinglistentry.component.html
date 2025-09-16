@@ -1,0 +1,40 @@
+
+  <div class="itemRow" >
+    <div class="due">
+      {{entry.end_date}}
+    </div>
+    <mat-expansion-panel class="panel">
+
+        <mat-expansion-panel-header>
+          {{ entry.book.title }}
+        </mat-expansion-panel-header>
+        <mat-panel-description>
+          <div class="description">
+            <div class="title">
+              {{entry.book.title}}
+            </div>
+            <div class="publisher">
+              Publisher: {{entry.book.publisher.name}}
+            </div>
+            <div class="authors">By
+              <div class="author" *ngFor="let author of entry.book.authors">
+                {{author.name}}
+              </div>
+            </div>
+            <div class="isbn">
+              ISBN: {{entry.book.isbn}}
+            </div>
+            <div class="edition">
+              Edition: {{entry.book.edition}}
+            </div>
+            <div class="dates">
+              {{entry.start_date }} -> {{entry.end_date}}
+            </div>
+          </div>
+
+        </mat-panel-description>
+
+    </mat-expansion-panel>
+
+  </div>
+

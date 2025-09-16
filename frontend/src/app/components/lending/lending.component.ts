@@ -3,11 +3,13 @@ import {HeaderComponent} from '../header/header.component';
 import {ILendingEntry} from '../../interfaces/lending.interface';
 import {LendingService} from '../../services/lending.service';
 import {MatListModule} from '@angular/material/list';
-import {MatLine} from '@angular/material/core';
+import {MatLineModule} from '@angular/material/core';
 import {MatButton} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
 import {BookdialogComponent} from './bookdialog.component';
 import {NgFor} from '@angular/common';
+import {LendinglistentryComponent} from './lending-list-entry/lendinglistentry/lendinglistentry.component';
+import {MatAccordion} from '@angular/material/expansion';
 
 
 
@@ -17,9 +19,11 @@ import {NgFor} from '@angular/common';
   imports: [
     HeaderComponent,
     MatListModule,
-    MatLine,
+    MatLineModule,
     MatButton,
-    NgFor
+    NgFor,
+    LendinglistentryComponent,
+    MatAccordion
   ],
   templateUrl: './lending.component.html',
   styleUrl: './lending.component.scss'

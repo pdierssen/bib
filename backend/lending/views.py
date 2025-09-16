@@ -29,7 +29,7 @@ class BookViewSet(viewsets.ModelViewSet):
 
 class LendingViewSet(viewsets.ModelViewSet):
     queryset = Lending.objects.all()
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_serializer_class(self):
         if self.action == 'create':
@@ -37,15 +37,17 @@ class LendingViewSet(viewsets.ModelViewSet):
         return LendingSerializer
 
     def list(self, request, *args, **kwargs):
-        lendings = Lending.objects.all()
+        user = self.request.user
+        lendings = Lending.objects.filter(
+            user=user
+        )
         serializer = LendingSerializer(lendings, many=True)
         return Response(serializer.data)
 
 
-
-    @action(detail=False, methods=["delete"])
+    @action(detail=False, methods=["post"])
     def return_by_nfc(self, request):
-        nfc_id = request.data.get("nfc_id")
+        nfc_id = request.data.get("book")
         if not nfc_id:
             return Response({"error": "nfc_id required"}, status=status.HTTP_400_BAD_REQUEST)
 

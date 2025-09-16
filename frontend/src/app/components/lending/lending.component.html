@@ -9,6 +9,7 @@
     <button mat-button="elevated" (click)="openReturnDialog()">Return Book</button>
   </div>
   <h2>Books that you borrowed</h2>
+  <div class="info"> Due Date | Book </div>
   <mat-accordion>
     <ng-container *ngFor="let lendingentry of lendingentries()">
       <div class="lendingrow">

@@ -12,18 +12,22 @@
     color: #212121;
     margin-bottom: 0.5rem;
   }
+  .info {
 
+
+
+  }
   button[mat-button] {
     margin-right: 1rem;
     margin-bottom: 1rem;
-    background-color: #1976d2;
-    color: white;
-    font-weight: 500;
+    background-color: #e0e0e0;
+    color: #757575;
+    //font-weight: 500;
     border-radius: 6px;
     text-transform: none;
 
     &:hover {
-      background-color: #1565c0;
+      background-color: #eeeeee;
     }
   }
 

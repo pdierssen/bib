@@ -1,61 +1,41 @@
-import {Injectable, Injector} from '@angular/core';
-import {Router} from '@angular/router';
-import {HttpHandler, HttpEvent, HttpRequest, HttpErrorResponse, HttpStatusCode} from '@angular/common/http';
-import {catchError, Observable, throwError} from 'rxjs';
-import {environment} from '../../environment/environment';
+import { HttpInterceptorFn, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { environment } from '../../environment/environment';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class TokeninterceptorService {
+export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
+  console.log('Interceptor triggered:', req.url);
 
-  constructor(
-    private router: Router,
-    private injector: Injector
-  ) { }
+  const authEndpoints = environment.authendpoints || [];
+  const isAuthEndpoint = authEndpoints.some(endpoint => req.url.includes(endpoint));
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const authEndpoints = environment.authendpoints;
-    const isAuthEndpoint = authEndpoints.some(endpoint => request.url.includes(endpoint));
+  let clonedReq = req;
 
-    if (isAuthEndpoint) {
-      return next.handle(request).pipe(
-        catchError((error: HttpErrorResponse) => {
-          if (error.status == HttpStatusCode.Unauthorized) {
-            console.error('401 Unauthorized error for URL:', request.url, 'Error details', error);
-          }
-          return throwError(() => error);
-        })
-      );
-    }
-
-    let token = null;
-
+  if (!isAuthEndpoint) {
     try {
-      if (typeof localStorage !== 'undefined') {
-        const storedToken = localStorage.getItem(environment.tokenKey);
-        if (storedToken) {
-          token = JSON.parse(storedToken);
-        } else {
-
+      const storedToken = localStorage.getItem(environment.tokenKey);
+      if (storedToken) {
+        const token = storedToken;
+        if (token) {
+          clonedReq = req.clone({
+            setHeaders: {
+              Authorization: `Token ${token}`
+            }
+          });
         }
       }
-
     } catch (error) {
-      console.error('Error parsing stored auth tokens:', error)
+      console.error('Error parsing stored auth tokens:', error);
     }
-
-    if (token && token.access) {
-      request = request.clone({
-        setHeaders: {
-          Authorization: `Token ${token.access}`
-        }
-      });
-    }
-    return next.handle(request).pipe(
-      catchError((error: HttpErrorResponse) => {
-        return throwError(() => error);
-      })
-    );
   }
-}
+
+  return next(clonedReq).pipe(
+    catchError((error: HttpErrorResponse) => {
+      if (error.status === HttpStatusCode.Unauthorized) {
+        console.error('401 Unauthorized for URL:', req.url, error);
+        // optionally: redirect to login
+      }
+      return throwError(() => error);
+    })
+  );
+};

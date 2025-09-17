@@ -20,12 +20,19 @@ do {
 	}
 } while (-not $dockerresult)
 
-$name= $env:USERNAME
-$pathToProject = "PycharmProjects/bibliothek"
 
+$name= $env:USERNAME
+$pathToProject = "Public/bibliothek_source_code/bib"
+
+#Write-Output $name
+
+#Write-Output "Starting WSL..."
+#wsl -d Ubuntu --exec bash -c "echo WSL running"
 
 Write-Output "Starting Docker compose"
-$composeResult = wsl -d Ubuntu --exec bash -c "cd /mnt/c/Users/${name}/${pathToProject} && docker-compose up -d" 2>&1
+
+$composeResult = wsl -d Ubuntu --exec bash -c "cd /mnt/c/Users/Public/bibliothek_source_code/bib && docker-compose up -d" 2>&1
+
 
 if ($LASTEXITCODE -ne 0) {
 	Write-Output "Docker compose failed, trying with build..."
@@ -41,6 +48,7 @@ if ($LASTEXITCODE -eq 0) {
 	exit
 }
 
+#Start-Sleep -Seconds 5
 #stopping frontend
 taskkill /f /im "Docker Desktop.exe"
 

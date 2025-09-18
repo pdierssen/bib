@@ -72,7 +72,7 @@ export class LendingComponent implements OnInit{
                 console.log("Book borrowed");
                 this.fetchBorrowedBooks();
               }, error: err => {
-                this.shared.reportError(err);
+                this.shared.visualizeError(err);
               }
             });
           }
@@ -105,7 +105,7 @@ export class LendingComponent implements OnInit{
                 console.log("Book returned.");
                 this.fetchBorrowedBooks();
               }, error: err => {
-                this.shared.reportError(err);
+                this.shared.visualizeError(err);
               }
             });
           }

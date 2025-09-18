@@ -87,7 +87,7 @@ export class RegisterComponent implements OnInit{
         this.router.navigate(['/login']); // redirect after success
       },
       error: (err) => {
-        this.shared.reportError(err);
+        this.shared.visualizeError(err);
       }
     });
   }

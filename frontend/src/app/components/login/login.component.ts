@@ -54,7 +54,7 @@ export class LoginComponent {
         this.router.navigate(['/lending']);
       },
       error: err => {
-        this.shared.reportError(err);
+        this.shared.visualizeError(err);
       }
     });
   }

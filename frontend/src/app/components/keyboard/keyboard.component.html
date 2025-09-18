@@ -1,0 +1,22 @@
+<!-- virtual-keyboard.component.html -->
+<div class="keyboard">
+  <div class="row">
+    <button *ngFor="let key of row1_signal()" (click)="sendKey(key)">{{ key }}</button>
+  </div>
+  <div class="row">
+    <button *ngFor="let key of row2_signal()" (click)="sendKey(key)">{{ key }}</button>
+  </div>
+    <div class="row">
+    <button *ngFor="let key of row3_signal()" (click)="sendKey(key)">{{ key }}</button>
+  </div>
+  <div class="row">
+    <button *ngFor="let key of row4_signal()" (click)="sendKey(key)">{{ key }}</button>
+  </div>
+  <div class="row">
+    <button (click)="sendKey('Shift')">⇧</button>
+    <button (click)="sendKey('Backspace')">⌫</button>
+    <button (click)="sendKey(' ')">Space</button>
+    <button (click)="sendKey('Enter')">⏎</button>
+    <button (click)="sendKey('Esc')">X</button>
+  </div>
+</div>

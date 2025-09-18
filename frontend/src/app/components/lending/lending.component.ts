@@ -70,6 +70,7 @@ export class LendingComponent implements OnInit{
             this.lendingService.borrowBook(book).subscribe({
               next:  () => {
                 console.log("Book borrowed");
+                this.shared.usesnackbar("Book borrowed successfully.");
                 this.fetchBorrowedBooks();
               }, error: err => {
                 this.shared.visualizeError(err);
@@ -103,6 +104,7 @@ export class LendingComponent implements OnInit{
             this.lendingService.returnBook(book).subscribe({
               next: () => {
                 console.log("Book returned.");
+                this.shared.usesnackbar("Book returned successfully.");
                 this.fetchBorrowedBooks();
               }, error: err => {
                 this.shared.visualizeError(err);

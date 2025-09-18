@@ -84,6 +84,7 @@ export class RegisterComponent implements OnInit{
     this.authService.register(data).subscribe({
       next: () => {
         console.log('Registration successful!');
+        this.shared.usesnackbar("Registered.");
         this.router.navigate(['/login']); // redirect after success
       },
       error: (err) => {

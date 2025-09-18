@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {CommonModule, NgIf} from '@angular/common';
 import {Router} from "@angular/router";
+import {SharedFunctionsService} from '../../services/shared-functions.service';
 
 
 
@@ -18,7 +19,8 @@ import {Router} from "@angular/router";
 export class HeaderComponent {
   constructor(
       private authService: AuthService,
-      private router: Router
+      private router: Router,
+      private shared: SharedFunctionsService
   ) {
   }
 
@@ -38,6 +40,7 @@ export class HeaderComponent {
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
+    this.shared.usesnackbar("Logged out.");
   }
 
   home() {

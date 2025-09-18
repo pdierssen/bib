@@ -12,12 +12,12 @@ export class SharedFunctionsService {
 
   visualizeError(err: any) {
     console.error('Failed', err);
-    let messaeg = this.extractErrorMessage(err);
-    this.snackbar.open(messaeg, 'close', {duration: 6000});
+    let message = this.extractErrorMessage(err);
+    this.snackbar.open(message, 'close', {duration: 6000});
   }
 
-  visualizeSuccess(message: string){
-
+  usesnackbar(message: string){
+    this.snackbar.open(message, 'close', {duration: 6000});
   }
 
 
@@ -30,6 +30,10 @@ export class SharedFunctionsService {
         message = err.error.detail;
       } else if (err.error.book){
         message = err.error.book[0];
+      } else if (err.error.error) {
+        message = err.error.error;
+      } else if (err.error.nfc_id) {
+        message = err.error.nfc_id;
       } else if (typeof err.error === 'string') {
         message = err.error;
       }

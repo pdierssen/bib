@@ -51,6 +51,7 @@ export class LoginComponent {
     this.authService.login(nfcId).subscribe({
       next: () => {
         console.log('Login successful!');
+        this.shared.usesnackbar("Logged in.");
         this.router.navigate(['/lending']);
       },
       error: err => {

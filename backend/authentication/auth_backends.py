@@ -18,3 +18,21 @@ class NFCAuthenticationBackend(BaseBackend):
             return None
 
 #    def has_perm(self, user, perm, obj=None):
+from datetime import timedelta
+from django.utils import timezone
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.exceptions import AuthenticationFailed
+
+class ExpiringTokenAuthentication(TokenAuthentication):
+    """
+    TokenAuthentication that expires after 10 minutes.
+    """
+    token_ttl = timedelta(minutes=10)
+
+    def authenticate_credentials(self, key):
+        user, token = super().authenticate_credentials(key)
+        print(token.created)
+        if timezone.now() - token.created > self.token_ttl:
+            raise AuthenticationFailed("Token has expired")
+
+        return (user, token)

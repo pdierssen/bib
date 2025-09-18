@@ -10,18 +10,18 @@
       <div class="field">
         <mat-form-field appearance="fill">
           <mat-label>First Name</mat-label>
-          <input matInput placeholder="Name" formControlName="first_name" required>
+          <input matInput placeholder="Name" formControlName="first_name" required (focus)="inputClicked(nameFormGroup.controls['first_name'])">
         </mat-form-field>
       </div>
       <div class="field">
         <mat-form-field appearance="fill">
           <mat-label>Last Name</mat-label>
-          <input matInput placeholder="LastName" formControlName="last_name" required>
+          <input matInput  placeholder="LastName" formControlName="last_name" required (focus)="inputClicked(nameFormGroup.controls['last_name'])">
         </mat-form-field>
       </div>
 
       <div>
-        <button mat-button matStepperNext>Next</button>
+        <button (click)="next()" mat-button matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
@@ -42,3 +42,5 @@
   </mat-step>
 </mat-stepper>
 
+
+<app-keyboard [hidden]="hidekeyboard()" (keyPress)="handleKey($event)"></app-keyboard>

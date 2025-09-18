@@ -1,8 +1,8 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, signal} from '@angular/core';
 import {HeaderComponent} from '../header/header.component';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {IRegistration} from '../../interfaces/auth.interface';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -10,6 +10,7 @@ import {MatButton} from '@angular/material/button';
 import {MatInput} from '@angular/material/input';
 import {NgOptimizedImage} from '@angular/common';
 import {SharedFunctionsService} from '../../services/shared-functions.service';
+import {KeyboardComponent} from '../keyboard/keyboard.component';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,8 @@ import {SharedFunctionsService} from '../../services/shared-functions.service';
     MatFormFieldModule,
     MatButton,
     MatInput,
-    NgOptimizedImage
+    NgOptimizedImage,
+    KeyboardComponent
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
@@ -35,6 +37,8 @@ export class RegisterComponent implements OnInit{
     );
 
   private nfcBuffer: string = '';
+  hidekeyboard = signal(true);
+  activeformcontrol:  FormControl |null = null;
 
   constructor(
     private authService: AuthService,
@@ -103,5 +107,36 @@ export class RegisterComponent implements OnInit{
         inputElement.focus();
       }
     }, 0); // 0ms delay is often enough, but you can increase it if needed
+  }
+
+  inputClicked(formcontrol: AbstractControl<any> | null) {
+    this.hidekeyboard.set(false);
+    if (formcontrol instanceof FormControl) {
+      this.activeformcontrol = formcontrol;
+    }
+  }
+
+  handleKey(key: String) {
+    if (key == 'Esc'){
+      this.hidekeyboard.set(true);
+    } else if (key == 'Backspace'){
+      if (this.activeformcontrol) {
+        const currentValue = this.activeformcontrol.value || '';
+        // Remove last character
+        this.activeformcontrol.setValue(currentValue.slice(0, -1));
+      }
+    } else if (key == 'Space') {
+      if (this.activeformcontrol) {
+        this.activeformcontrol.setValue(this.activeformcontrol.value + ' ');
+      }
+    } else {
+      if (this.activeformcontrol) {
+        this.activeformcontrol.setValue(this.activeformcontrol.value + key);
+      }
+    }
+  }
+
+  next() {
+    this.hidekeyboard.set(true);
   }
 }

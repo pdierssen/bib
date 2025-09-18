@@ -29,7 +29,7 @@ class LoginView(generics.GenericAPIView):
         nfc_id = request.data.get('nfc_id')
         user = authenticate(nfc_id=nfc_id)
         if user is None:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"error": "There is no User with this nfc card registered."}, status=status.HTTP_401_UNAUTHORIZED)
         token, created = Token.objects.get_or_create(user=user)
         if not created:
             Token.objects.get(user=user).delete()

@@ -40,4 +40,7 @@ export class HeaderComponent {
     this.router.navigate(['/login']);
   }
 
+  home() {
+    this.router.navigate(['/login']);
+  }
 }

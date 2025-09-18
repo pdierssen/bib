@@ -10,6 +10,7 @@ import {BookdialogComponent} from './bookdialog.component';
 import {NgFor} from '@angular/common';
 import {LendinglistentryComponent} from './lending-list-entry/lendinglistentry/lendinglistentry.component';
 import {MatAccordion} from '@angular/material/expansion';
+import {SharedFunctionsService} from '../../services/shared-functions.service';
 
 
 
@@ -48,23 +49,9 @@ export class LendingComponent implements OnInit{
   }
 
   constructor(
-    private lendingService: LendingService
+    private lendingService: LendingService,
+    private shared: SharedFunctionsService
   ) {
-  }
-
-  reportError(err: any) {
-    let message = 'Failed';
-                if (err.error) {
-                  if (err.error.non_field_errors && err.error.non_field_errors.length > 0) {
-                    message = err.error.non_field_errors[0]; // Take the first error message
-                  } else if (err.error.detail) {
-                    message = err.error.detail;
-                  } else if (typeof err.error === 'string') {
-                    message = err.error;
-                  }
-                }
-                console.error('Failed', err);
-                alert(message);
   }
 
   openBorrowDialog() {
@@ -85,7 +72,7 @@ export class LendingComponent implements OnInit{
                 console.log("Book borrowed");
                 this.fetchBorrowedBooks();
               }, error: err => {
-                this.reportError(err);
+                this.shared.reportError(err);
               }
             });
           }
@@ -118,7 +105,7 @@ export class LendingComponent implements OnInit{
                 console.log("Book returned.");
                 this.fetchBorrowedBooks();
               }, error: err => {
-                this.reportError(err);
+                this.shared.reportError(err);
               }
             });
           }

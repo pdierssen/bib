@@ -1,5 +1,5 @@
 <header class="app-header">
-  <div class="app-title">OHBook</div>
+  <div class="app-title" (click)="home()">OHBook</div>
 
   <nav class="user-controls">
     <ng-container *ngIf="isLoggedIn; else loggedOut">

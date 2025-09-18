@@ -9,6 +9,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButton} from '@angular/material/button';
 import {MatInput} from '@angular/material/input';
 import {NgOptimizedImage} from '@angular/common';
+import {SharedFunctionsService} from '../../services/shared-functions.service';
 
 @Component({
   selector: 'app-register',
@@ -39,7 +40,8 @@ export class RegisterComponent implements OnInit{
     private authService: AuthService,
     private router: Router,
     private fb: FormBuilder,
-    private elRef: ElementRef
+    private elRef: ElementRef,
+    private shared: SharedFunctionsService
   )
   {
 
@@ -70,20 +72,7 @@ export class RegisterComponent implements OnInit{
     }
     event.preventDefault();
   }
-  reportError(err: any) {
-    let message = 'Failed';
-      if (err.error) {
-        if (err.error.non_field_errors && err.error.non_field_errors.length > 0) {
-          message = err.error.non_field_errors[0]; // Take the first error message
-        } else if (err.error.detail) {
-          message = err.error.detail;
-        } else if (typeof err.error === 'string') {
-          message = err.error;
-        }
-      }
-      console.error('Failed', err);
-      alert(message);
-  }
+
 
   register(nfc_id: string) {
     const data: IRegistration = {
@@ -98,7 +87,7 @@ export class RegisterComponent implements OnInit{
         this.router.navigate(['/login']); // redirect after success
       },
       error: (err) => {
-        this.reportError(err);
+        this.shared.reportError(err);
       }
     });
   }

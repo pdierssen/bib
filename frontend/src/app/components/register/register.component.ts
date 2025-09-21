@@ -11,6 +11,7 @@ import {MatInput} from '@angular/material/input';
 import {NgOptimizedImage} from '@angular/common';
 import {SharedFunctionsService} from '../../services/shared-functions.service';
 import {KeyboardComponent} from '../keyboard/keyboard.component';
+import {KeyboardService} from '../keyboard/keyboard.service';
 
 @Component({
   selector: 'app-register',
@@ -45,7 +46,8 @@ export class RegisterComponent implements OnInit{
     private router: Router,
     private fb: FormBuilder,
     private elRef: ElementRef,
-    private shared: SharedFunctionsService
+    private shared: SharedFunctionsService,
+    private keyboard: KeyboardService
   )
   {
 
@@ -53,7 +55,9 @@ export class RegisterComponent implements OnInit{
 
   ngOnInit() {
 
-
+    this.keyboard.keyObservable.subscribe(value => {
+      this.handleKey(value);
+    });
     // focus on NFC step if needed
     const nfcDiv = this.elRef.nativeElement.querySelector('.nfc-step-container');
     if (nfcDiv) nfcDiv.focus();

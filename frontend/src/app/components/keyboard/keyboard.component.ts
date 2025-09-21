@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Output, signal} from '@angular/core';
 import {NgForOf} from '@angular/common';
+import {Subject} from 'rxjs';
+import {KeyboardService} from './keyboard.service';
 
 @Component({
   selector: 'app-keyboard',
@@ -11,7 +13,10 @@ import {NgForOf} from '@angular/common';
   styleUrl: './keyboard.component.scss'
 })
 export class KeyboardComponent {
-  @Output() keyPress = new EventEmitter<string>();
+  constructor(
+    private keyboard: KeyboardService
+  ) {
+  }
   row1 = ['1','2','3','4','5','6','7','8','9','0'];
   row2 = ['q','w','e','r','t','z','u','i','o','p', 'ü'];
   row2_capital = ["Q","W","E","R","T","Z","U","I","O","P", 'Ü']
@@ -40,7 +45,7 @@ export class KeyboardComponent {
         this.capital = true;
       }
     }else {
-      this.keyPress.emit(key);
+      this.keyboard.keyPressed(key);
     }
   }
 }

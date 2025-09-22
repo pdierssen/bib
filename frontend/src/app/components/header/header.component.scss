@@ -13,6 +13,11 @@
 .app-title {
   font-size: 1.2rem;
   font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }
 
 .user-controls {

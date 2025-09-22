@@ -23,9 +23,10 @@
       </div>
 
       <div>
-        <button (click)="next()" mat-button matStepperNext>Next</button>
+        <button mat-button matStepperNext>Next</button>
       </div>
     </form>
+    <app-keyboard></app-keyboard>
   </mat-step>
 
   <!-- Step 2: NFC Registration -->
@@ -45,4 +46,3 @@
 </mat-stepper>
 
 
-<app-keyboard [hidden]="hidekeyboard()"></app-keyboard>

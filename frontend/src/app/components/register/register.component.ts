@@ -1,8 +1,8 @@
-import {Component, ElementRef, OnInit, signal} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {HeaderComponent} from '../header/header.component';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {IRegistration} from '../../interfaces/auth.interface';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -38,13 +38,11 @@ export class RegisterComponent implements OnInit{
     );
 
   private nfcBuffer: string = '';
-  hidekeyboard = signal(true);
   activeformcontrol:  FormControl |null = null;
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private fb: FormBuilder,
     private elRef: ElementRef,
     private shared: SharedFunctionsService,
     private keyboard: KeyboardService
@@ -54,7 +52,10 @@ export class RegisterComponent implements OnInit{
   }
 
   ngOnInit() {
-
+    let defaultformcontrol = this.nameFormGroup.controls['first_name'];
+    if (defaultformcontrol instanceof FormControl) {
+      this.activeformcontrol = defaultformcontrol;
+    }
     this.keyboard.keyObservable.subscribe(value => {
       this.handleKey(value);
     });
@@ -114,7 +115,6 @@ export class RegisterComponent implements OnInit{
   }
 
   inputClicked(formcontrol: AbstractControl<any> | null) {
-    this.hidekeyboard.set(false);
     if (formcontrol instanceof FormControl) {
       this.activeformcontrol = formcontrol;
     }
@@ -122,9 +122,7 @@ export class RegisterComponent implements OnInit{
   }
 
   handleKey(key: String) {
-    if (key == 'Esc'){
-      this.hidekeyboard.set(true);
-    } else if (key == 'Backspace'){
+    if (key == 'Backspace'){
       if (this.activeformcontrol) {
         const currentValue = this.activeformcontrol.value || '';
         // Remove last character
@@ -139,9 +137,5 @@ export class RegisterComponent implements OnInit{
         this.activeformcontrol.setValue(this.activeformcontrol.value + key);
       }
     }
-  }
-
-  next() {
-    this.hidekeyboard.set(true);
   }
 }

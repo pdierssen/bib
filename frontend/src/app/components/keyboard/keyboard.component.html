@@ -1,16 +1,16 @@
 <!-- virtual-keyboard.component.html -->
 <div class="keyboard">
   <div class="row">
-    <button *ngFor="let key of row1_signal()" (click)="sendKey(key)" (pointerdown)="sendKey(key)">{{ key }}</button>
+    <button *ngFor="let key of row1_signal()"  (pointerdown)="sendKey(key)">{{ key }}</button>
   </div>
   <div class="row">
-    <button *ngFor="let key of row2_signal()" (click)="sendKey(key)" (pointerdown)="sendKey(key)">{{ key }}</button>
+    <button *ngFor="let key of row2_signal()"  (pointerdown)="sendKey(key)">{{ key }}</button>
   </div>
     <div class="row">
-    <button *ngFor="let key of row3_signal()" (click)="sendKey(key)" (pointerdown)="sendKey(key)">{{ key }}</button>
+    <button *ngFor="let key of row3_signal()"  (pointerdown)="sendKey(key)">{{ key }}</button>
   </div>
   <div class="row">
-    <button *ngFor="let key of row4_signal()" (click)="sendKey(key)" (pointerdown)="sendKey(key)">{{ key }}</button>
+    <button *ngFor="let key of row4_signal()"  (pointerdown)="sendKey(key)">{{ key }}</button>
   </div>
   <div class="row">
     <button (click)="sendKey('Shift')">⇧</button>

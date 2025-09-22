@@ -118,6 +118,7 @@ export class RegisterComponent implements OnInit{
     if (formcontrol instanceof FormControl) {
       this.activeformcontrol = formcontrol;
     }
+    console.log("input clicked");
   }
 
   handleKey(key: String) {

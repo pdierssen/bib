@@ -32,6 +32,7 @@ export class KeyboardComponent {
   capital = false;
 
   sendKey(key: string) {
+    console.log("key pressed");
     if (key == 'Shift'){
       if (this.capital){
         this.row2_signal.set(this.row2);
